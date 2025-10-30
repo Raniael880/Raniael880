@@ -1,0 +1,218 @@
+var x = 5
+let y = 10
+const z = 15
+// var elle reassigne et declare , let elle reassigne mais ne declare pas, const ni reassigne ni declare
+var x = 20
+let y = 30
+const z = 45
+
+function testScope() {
+  if (true) {
+    var a = "var visible partout";
+    let b = "let visible ici seulement";
+  }
+  console.log(a);
+  console.log(b); // Pourquoi erreur ?
+}
+testScope();
+// parce que let est block scope donc visible que dans le block if
+function sayHello(name) {
+  return Bonjour ${name};
+}
+
+const sayHelloArrow = (name) => Bonjour ${name};
+// les deux fonctions font la meme chose mais la deuxieme est une fonction flechee
+const person = {
+  name: "Sara",
+  sayHello: function () {
+    console.log("Bonjour " + this.name);
+  },
+  sayHelloArrow: () => {
+    console.log("Bonjour " + this.name); 
+  },
+};
+
+person.sayHello();
+person.sayHelloArrow();
+// la premiere methode affiche "Bonjour Sara" parce que this fait reference a l'objet person
+// la deuxieme methode affiche "Bonjour undefined" parce que les fonctions flechees n'ont pas leur propre this, elles heritent du contexte parent
+
+// mathUtils.js
+export const PI = 3.14;
+
+export function carre(x) {
+  return x * x;
+}		4
+
+// Export par défaut
+export default function message() {
+  console.log("Module mathUtils chargé !");
+}
+// "export" permet de rendre des variables ou fonctions disponibles ailleurs.
+//"export default" définit l'élément principal du module.
+// "import" permet de récupérer ces éléments dans un autre fichier.
+
+// mathUtils.js
+
+// Export nommé : on peut en avoir plusieurs
+export const PI = 3.14;
+
+export function carre(x) {
+  return x * x;
+}
+
+// Export par défaut : un seul par fichier
+// Celui-ci sera importé sans accolades {}
+export default function message() {
+  console.log("Module mathUtils chargé !");
+}
+
+// index.js
+
+//  Importation du module mathUtils.js
+// - message vient de "export default" → sans accolades
+// - PI et carre viennent de "export" → avec accolades
+import message, { PI, carre } from "./mathUtils.js";
+
+//  Utilisation des fonctions et constantes importées
+message(); // Affiche : Module mathUtils chargé !
+console.log("PI =", PI); // Affiche la constante PI = 3.14
+console.log("Carré de 5 =", carre(5)); // Affiche 25
+
+
+
+// Déclaration d’un tableau
+const fruits = ["pomme", "banane", "orange"];
+
+// .push() ajoute un élément à la fin du tableau
+fruits.push("kiwi"); // → ["pomme", "banane", "orange", "kiwi"]
+
+// .pop() supprime le dernier élément du tableau
+fruits.pop(); // supprime "kiwi" → ["pomme", "banane", "orange"]
+
+// Affiche le contenu final du tableau
+console.log(fruits); // Résultat : ["pomme", "banane", "orange"]
+
+
+
+const nums = [1, 2, 3, 4, 5];
+
+// .map() : transforme chaque élément du tableau
+// Ici, on multiplie chaque nombre par 2
+console.log(nums.map(n => n * 2)); 
+// Résultat : [2, 4, 6, 8, 10]
+
+// .filter() : garde seulement les éléments qui passent la condition
+// Ici, on garde uniquement les nombres pairs
+console.log(nums.filter(n => n % 2 === 0)); 
+// Résultat : [2, 4]
+
+// .reduce() : réduit le tableau à une seule valeur
+// Ici, on calcule la somme totale
+console.log(nums.reduce((sum, n) => sum + n, 0)); 
+
+
+
+
+const nums = [1, 2, 3, 4, 5];
+
+//  .find() : retourne le premier élément qui satisfait la condition
+console.log(nums.find(n => n > 3)); 
+// Résultat : 4 (le premier nombre > 3)
+
+//  .some() : retourne true si au moins un élément satisfait la condition
+console.log(nums.some(n => n < 0)); 
+// Résultat : false (aucun nombre < 0)
+
+//  .every() : retourne true si tous les élémentssatisfont la condition
+console.log(nums.every(n => n > 0)); 
+// Résultat : true (tous les nombres sont > 0)
+
+
+const user = { id: 1, name: "Ali", city: "Rabat" };
+
+
+const { name, city } = user;
+console.log(${name} habite à ${city}); 
+// Résultat : "Ali habite à Rabat"
+
+const { name: fullName, ...rest } = user;
+console.log(fullName); // Résultat : "Ali"
+// 'rest' contient toutes les autres propriétés de l'objet
+console.log(rest);     // Résultat : { id: 1, city: "Rabat" }
+
+
+
+
+const p = new Promise((resolve) => {
+  // setTimeout simule une opération longue (ici 2 secondes)
+  setTimeout(() => resolve(" Opération terminée !"), 2000);
+});
+
+// Utilisation de la promesse avec .then()
+// .then() s'exécute quand la promesse est "résolue"
+p.then(result => console.log(result));
+// Après 2 secondes : " Opération terminée !"
+
+
+async function getUsers() {
+  try {
+    // await  que la requête fetch soit terminée
+    const res = await fetch("https://jsonplaceholder.typicode.com/users");
+
+    // Vérifie si la réponse est correcte
+    if (!res.ok) throw new Error("Échec de la requête HTTP");
+
+    // Convertit la réponse JSON en objet JavaScript
+    const data = await res.json();
+
+    // Affiche les données reçues
+    console.log("Utilisateurs récupérés :", data);
+  } catch (e) {
+    // Si une erreur survient (ex: pas de connexion, URL invalide)
+    console.error(" Erreur :", e.message);
+  }
+}
+
+
+getUsers();
+
+
+const name = "Nadia";
+const hour = new Date().getHours(); // Récupère l'heure actuelle
+
+
+console.log(Bonjour ${name}, il est ${hour}h);
+// Exemple de sortie : "Bonjour Nadia, il est 14h"
+
+
+
+// Opérateur Spread  : "déplie" un tableau ou un objet
+const arr1 = [1, 2];
+const arr2 = [...arr1, 3, 4]; // Copie arr1 et ajoute 3 et 4
+console.log(arr2); // Résultat : [1, 2, 3, 4]
+
+// Opérateur Rest  : "rassemble" plusieurs valeurs dans un tableau
+function sum(...numbers) {
+  // 'numbers' devient un tableau [1, 2, 3, 4]
+  return numbers.reduce((a, b) => a + b, 0); // Calcule la somme
+}
+
+console.log(sum(1, 2, 3, 4)); 
+
+
+
+
+const produits = [
+  { nom: "Lait", prix: 10, expireLe: "2025-12-01" },
+  { nom: "Yaourt", prix: 5, expireLe: "2024-01-01" },
+  { nom: "Jus", prix: 8, expireLe: "2026-02-15" },
+];
+
+const aujourdHui = new Date();
+
+const valides = produits.filter(p => new Date(p.expireLe) > aujourdHui);
+const total = valides.reduce((s, p) => s + p.prix, 0);
+
+console.log("Produits valides :", valides);
+console.log("Total :", total, "DH");
